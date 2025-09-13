@@ -391,7 +391,7 @@
         <section id="implementasi">
             <h3>3. Implementasi</h3>
 			 <div class="figure">
-                <img src="schematic.jpg" alt="Rangkaian Lengkap" width="700">
+                <img src="schematic2.jpg" alt="Rangkaian Lengkap" width="700">
                 <caption>Gambar 6: Rangkaian Lengkap</caption>
             </div>
             <p>Bagian ini menjelaskan langkah-langkah praktis dalam merakit dan memprogram sistem **Smart Garden**.</p>
@@ -451,8 +451,8 @@
 
 // Definisikan pin untuk sensor kelembaban, DHT dan relay
 const int sensorKelembabanPin = A0; // Pin analog untuk sensor kelembaban tanah
-const int relayPin = D1;           // Pin digital untuk mengontrol relay (GPIO5 pada Wemos D1 Mini)
-const int dhtPin = D2;             // Pin digital untuk sensor DHT11 (GPIO4 pada Wemos D1 Mini)
+const int relayPin = 5;           // Pin digital D1 untuk mengontrol relay (GPIO5 pada Wemos D1 Mini)
+const int dhtPin = 4;             // Pin digital D2 untuk sensor DHT11 (GPIO4 pada Wemos D1 Mini)
 
 #define DHTTYPE DHT11              // Tipe sensor DHT yang digunakan (DHT11)
 DHT dht(dhtPin, DHTTYPE);          // Inisialisasi objek DHT
