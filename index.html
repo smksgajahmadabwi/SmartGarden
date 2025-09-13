@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Makalah Proyek Smart Garden - Implementasi sistem pertanian pintar berbasis IoT untuk siswa SMK Gajah Mada Banyuwangi">
+    <meta name="keywords" content="Smart Garden, IoT, Kecerdasan Artifisial, SMK Gajah Mada Banyuwangi, Wemos D1 Mini">
+    <meta name="author" content="Siswa Kelas X SMK Gajah Mada Banyuwangi">
+    <title>Makalah: SMART GARDEN - Project Kokurikuler dan Penerapan Koding & Kecerdasan Artifisial Kelas X - SMK GAJAH MADA BANYUWANGI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #0d47a1;
+            margin-bottom: 0.5em;
+            font-size: 2.5em;
+        }
+        .sub-judul {
+            text-align: center;
+            font-size: 1.2em;
+            color: #1976d2;
+            margin-bottom: 0.5em;
+        }
+        .sub-judul:last-of-type {
+            margin-bottom: 10px;
+        }
+        section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+        }
+        section:last-of-type {
+            border-bottom: none;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 25px;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 25px;
+        }
+        p {
+            margin-bottom: 10px;
+            color: #333;
+            text-align: justify;
+        }
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .figure img {
+            max-width: 80%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .figure caption {
+            font-style: italic;
+            margin-top: 8px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            color: #333;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        code {
+            font-family: Consolas, monospace;
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #333;
+            font-family: 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+            border: 1px solid #ddd;
+        }
+        .web-display {
+            border: 2px solid #2ecc71;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #3a506b;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            color: #ecf0f1;
+        }
+        .web-display h5 {
+            margin-top: 0;
+            color: #2ecc71;
+            font-size: 1.3em;
+        }
+        .highlight {
+            color: #0d47a1;
+            font-weight: bold;
+        }
+        .list-item-code {
+            font-family: Consolas, monospace;
+            background-color: #e0e0e0;
+            padding: 1px 3px;
+            border-radius: 3px;
+            color: #c7254e;
+        }
+        .references {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SMART GARDEN</h1>
+        <h2 class="sub-judul">Project Kokurikuler dan Penerapan Koding & Kecerdasan Artifisial Kelas X</h2>
+        <h2 class="sub-judul">SMK GAJAH MADA BANYUWANGI</h2>
+
+        <section id="abstrak">
+            <h3>Abstrak</h3>
+            <p>Proyek "**Smart Garden**" ini merupakan implementasi sistem pertanian pintar berbasis **Internet of Things (IoT)** yang dirancang sebagai kegiatan kokurikuler bagi siswa kelas X **SMK Gajah Mada Banyuwangi**. Sistem ini bertujuan untuk mengotomatisasi proses penyiraman tanaman berdasarkan tingkat kelembaban tanah, serta memantau kondisi suhu dan kelembaban udara lingkungan. Menggunakan mikrokontroler **Wemos D1 Mini** sebagai otak utama, sensor kelembaban tanah, sensor **DHT11**, modul relay, dan mini pump, proyek ini juga dilengkapi dengan antarmuka webserver yang responsif. Integrasi koding dan konsep dasar **kecerdasan artifisial** memungkinkan sistem untuk mengambil keputusan secara mandiri, memberikan pengalaman belajar praktis dalam bidang elektronika, pemrograman, dan aplikasi IoT di kehidupan nyata. Hasil proyek menunjukkan sistem dapat berfungsi dengan baik, memberikan data real-time, dan melakukan penyiraman otomatis, namun masih memerlukan kalibrasi optimal dan pengembangan fitur lebih lanjut.</p>
+        </section>
+
+        <section id="pendahuluan">
+            <h3>1. Pendahuluan</h3>
+            
+            <h4>1.1. Latar Belakang</h4>
+            <p>Pertanian adalah sektor vital yang menopang kehidupan, namun seringkali menghadapi tantangan seperti perubahan iklim, kelangkaan air, dan efisiensi tenaga kerja. Dalam era revolusi industri 4.0, teknologi **Internet of Things (IoT)** menawarkan solusi inovatif untuk mengatasi masalah-masalah ini dengan menciptakan sistem pertanian yang lebih cerdas dan efisien, dikenal sebagai "**Smart Farming**" atau "**Smart Garden**". Sistem ini memungkinkan pemantauan dan kontrol otomatis terhadap berbagai parameter lingkungan yang mempengaruhi pertumbuhan tanaman.</p>
+            <p>Di lingkungan pendidikan, penerapan proyek berbasis teknologi seperti **Smart Garden** dapat menjadi sarana yang sangat efektif untuk meningkatkan kompetensi peserta didik. Khususnya di **SMK Gajah Mada Banyuwangi**, kegiatan kokurikuler ini bertujuan untuk memberikan pengalaman langsung kepada siswa kelas X dalam mengintegrasikan pengetahuan teoritis tentang elektronika, pemrograman, dan konsep dasar **kecerdasan artifisial (AI)** ke dalam sebuah aplikasi nyata. Proyek ini tidak hanya mengajarkan keterampilan teknis, tetapi juga mendorong pemikiran kritis, kreativitas, dan kemampuan pemecahan masalah.</p>
+
+            <h4>1.2. Rumusan Masalah</h4>
+            <ol>
+                <li>Bagaimana merancang dan mengimplementasikan sistem **Smart Garden** yang mampu mengotomatisasi penyiraman tanaman berdasarkan kelembaban tanah?</li>
+                <li>Bagaimana mengintegrasikan **sensor suhu dan kelembaban udara (DHT11)** untuk memantau kondisi lingkungan sekitar tanaman?</li>
+                <li>Bagaimana membangun antarmuka **webserver** yang responsif dan informatif untuk menampilkan data sensor dan status pompa secara real-time?</li>
+                <li>Bagaimana menerapkan logika **koding** dan **kecerdasan artifisial sederhana** untuk pengambilan keputusan otomatis dalam sistem **Smart Garden**?</li>
+            </ol>
+
+            <h4>1.3. Tujuan Pembelajaran Proyek</h4>
+            <p>Project "**Smart Garden**" ini dirancang sebagai kegiatan kokurikuler yang bertujuan untuk:</p>
+            <ol>
+                <li>Meningkatkan pemahaman peserta didik tentang konsep dasar **Internet of Things (IoT)** dan penerapannya dalam kehidupan sehari-hari.</li>
+                <li>Mengembangkan keterampilan **koding** dan pemrograman mikrokontroler menggunakan platform **Arduino IDE**.</li>
+                <li>Memperkenalkan konsep dasar **kecerdasan artifisial (AI)** melalui logika sederhana untuk pengambilan keputusan otomatis.</li>
+                <li>Melatih peserta didik dalam merancang, merakit, dan menguji sistem elektronik sederhana.</li>
+                <li>Mendorong pemikiran kritis dan kemampuan pemecahan masalah dalam konteks proyek berbasis teknologi.</li>
+                <li>Mengintegrasikan pengetahuan lintas disiplin ilmu (biologi, fisika, informatika) dalam satu proyek aplikatif.</li>
+                <li>Menumbuhkan kesadaran akan pentingnya efisiensi penggunaan sumber daya (air) melalui sistem irigasi otomatis, serta monitoring kondisi lingkungan sekitar tanaman melalui antarmuka web yang responsif.</li>
+            </ol>
+        </section>
+
+        <section id="dasar-teori">
+            <h3>2. Dasar Teori</h3>
+            <p>Proyek **Smart Garden** mengintegrasikan beberapa komponen elektronik dan prinsip-prinsip dasar yang saling terkait. Pemahaman mendalam tentang setiap komponen sangat penting untuk keberhasilan proyek ini.</p>
+
+            <h4>2.1. Internet of Things (IoT)</h4>
+            <p>**Internet of Things (IoT)** adalah konsep di mana objek fisik sehari-hari dilengkapi dengan sensor, perangkat lunak, dan teknologi lain yang memungkinkan mereka untuk terhubung dan bertukar data dengan perangkat dan sistem lain melalui internet. Dalam konteks **Smart Garden**, IoT memungkinkan sensor untuk mengumpulkan data kelembaban tanah, suhu, dan kelembaban udara, yang kemudian dianalisis oleh mikrokontroler untuk membuat keputusan otomatis (misalnya, menyalakan pompa air) dan mengirimkan data ke antarmuka pengguna (webserver).</p>
+
+            <h4>2.2. Kecerdasan Artifisial (AI) Sederhana</h4>
+            <p>**Kecerdasan Artifisial (AI)** merujuk pada simulasi kecerdasan manusia dalam mesin yang diprogram untuk berpikir seperti manusia dan meniru tindakan mereka. Dalam proyek ini, AI diimplementasikan dalam bentuk **logika sederhana (rule-based system)** yang memungkinkan mikrokontroler untuk mengambil keputusan berdasarkan ambang batas yang telah ditentukan. Misalnya, "jika kelembaban tanah di bawah X%, maka siram tanaman selama Y detik." Meskipun sederhana, ini merupakan fondasi dasar dari sistem cerdas yang mampu beradaptasi dengan kondisi lingkungan.</p>
+            
+            <h4>2.3. Wemos D1 Mini</h4>
+            <p>**Wemos D1 Mini** adalah sebuah papan pengembangan mikrokontroler berbasis chip **ESP8266EX** yang dikenal karena ukurannya yang ringkas, kemampuan **Wi-Fi terintegrasi**, dan harga yang terjangkau. Ini menjadikannya pilihan populer untuk proyek-proyek IoT yang membutuhkan konektivitas jaringan.</p>
+
+            <h5>a. Spesifikasi</h5>
+            <ul>
+                <li><strong>Mikrokontroler:</strong> ESP8266EX</li>
+                <li><strong>Voltase Operasi:</strong> 3.3V</li>
+                <li><strong>Input Power (via Micro USB):</strong> 5V</li>
+                <li><strong>Digital I/O Pins:</strong> 11 (semua pin memiliki interrupt/pwm/I2C/one-wire kecuali D0)</li>
+                <li><strong>Analog Input Pins:</strong> 1 (Max 3.2V)</li>
+                <li><strong>Clock Speed:</strong> 80MHz/160MHz</li>
+                <li><strong>Flash Memory:</strong> 4MB</li>
+                <li><strong>Wi-Fi:</strong> 802.11 b/g/n</li>
+                <li><strong>Antena:</strong> PCB Antena onboard</li>
+                <li><strong>Ukuran:</strong> 34.2mm x 25.6mm</li>
+            </ul>
+
+            <h5>b. Pinout dan Keterangan</h5>
+            <p>Memahami **pinout Wemos D1 Mini** sangat krusial untuk menghubungkan sensor dan aktuator dengan benar. Berikut adalah tabel pinout umum:</p>
+            <div class="figure">
+                <img src="wemos.jpg" alt="Wemos D1 Mini Pinout Diagram" width="400">
+                <caption>Gambar 1: Pinout Wemos D1 Mini (Sumber: Random Nerd Tutorials)</caption>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pin Wemos D1 Mini</th>
+                        <th>Pin ESP8266</th>
+                        <th>Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="list-item-code">3V3</code></td>
+                        <td>-</td>
+                        <td>Output 3.3V power supply</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">5V</code></td>
+                        <td>-</td>
+                        <td>Input/Output 5V power supply (dari USB atau eksternal)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">GND</code></td>
+                        <td>-</td>
+                        <td>Ground</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">A0</code></td>
+                        <td>ADC0</td>
+                        <td>Analog Input (Max 3.2V)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D0</code></td>
+                        <td>GPIO16</td>
+                        <td>GPIO, tidak mendukung PWM/I2C/SPI/Interrupt</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D1</code></td>
+                        <td>GPIO5</td>
+                        <td>GPIO, SCL (I2C)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D2</code></td>
+                        <td>GPIO4</td>
+                        <td>GPIO, SDA (I2C)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D3</code></td>
+                        <td>GPIO0</td>
+                        <td>GPIO, Flash Button</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D4</code></td>
+                        <td>GPIO2</td>
+                        <td>GPIO, Built-in LED</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D5</code></td>
+                        <td>GPIO14</td>
+                        <td>GPIO, SCK (SPI)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D6</code></td>
+                        <td>GPIO12</td>
+                        <td>GPIO, MISO (SPI)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D7</code></td>
+                        <td>GPIO13</td>
+                        <td>GPIO, MOSI (SPI)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">D8</code></td>
+                        <td>GPIO15</td>
+                        <td>GPIO, SS (SPI)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">RX</code></td>
+                        <td>RXD0</td>
+                        <td>Receive Data (Serial)</td>
+                    </tr>
+                    <tr>
+                        <td><code class="list-item-code">TX</code></td>
+                        <td>TXD0</td>
+                        <td>Transmit Data (Serial)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>Keterangan Penting:</strong></p>
+            <ul>
+                <li>Pin <code class="list-item-code">D0</code> (**GPIO16**) sering digunakan untuk membangunkan modul dari deep sleep.</li>
+                <li>Pin <code class="list-item-code">D3</code> (**GPIO0**) dan <code class="list-item-code">D4</code> (**GPIO2**) memiliki pull-up resistor internal dan sering digunakan dengan I2C.</li>
+                <li>Pin <code class="list-item-code">D8</code> (**GPIO15**) memiliki pull-down resistor internal.</li>
+                <li>Pin <code class="list-item-code">A0</code> hanya dapat membaca tegangan hingga maksimal **3.2V**. Jika sensor mengeluarkan tegangan lebih tinggi (misalnya **5V**), diperlukan pembagi tegangan.</li>
+            </ul>
+
+            <h4>2.4. Sensor Kelembaban Tanah</h4>
+            <p>**Sensor kelembaban tanah** mengukur kandungan air volumetrik dalam tanah dengan mendeteksi resistansi listrik antara dua probe. Semakin tinggi kadar air, semakin rendah resistansi dan semakin tinggi konduktivitas listriknya. Sensor ini biasanya memiliki modul pengkondisi sinyal yang mengeluarkan sinyal analog (untuk pembacaan nilai persentase kelembaban) dan/atau sinyal digital (untuk deteksi on/off berdasarkan ambang batas yang diatur dengan potensiometer).</p>
+            <p>Sensor ini memiliki dua probe logam yang bertindak sebagai resistor yang nilainya berubah berdasarkan kelembaban tanah. Probe ini rentan terhadap korosi elektrolitik karena arus DC yang konstan. Untuk mengurangi masalah ini, beberapa teknik dapat diterapkan, seperti hanya memberi daya pada sensor saat akan membaca (menggunakan pin digital Wemos) atau menggunakan versi sensor yang sudah memiliki fitur anti-korosi.</p>
+			
+			<div class="figure">
+                <img src="soil.jpg" alt="Sensor Kembaban Tanah" width="300">
+                <caption>Gambar 2: Sensor Kelembaban Tanah</caption>
+            </div>
+			
+            <p>Koneksi ke **Wemos D1 Mini:**</p>
+            <ul>
+                <li><strong>VCC:</strong> Hubungkan ke <code class="list-item-code">3V3</code> atau <code class="list-item-code">5V</code> pada Wemos</li>
+                <li><strong>GND:</strong> Hubungkan ke <code class="list-item-code">GND</code> pada Wemos</li>
+                <li><strong>AO (Analog Output):</strong> Hubungkan ke pin analog <code class="list-item-code">A0</code> pada Wemos untuk membaca nilai kelembaban kontinu</li>
+                <li><strong>DO (Digital Output):</strong> Dapat dihubungkan ke pin digital mana pun jika hanya ingin deteksi on/off (biasanya tidak digunakan dalam proyek ini karena kita membutuhkan nilai persentase)</li>
+            </ul>
+
+            <h4>2.5. Sensor DHT11 (Suhu dan Kelembaban Udara)</h4>
+            <p>**DHT11** adalah sensor digital yang relatif murah untuk mengukur suhu dan kelembaban udara. Sensor ini menggunakan kapasitor untuk mengukur kelembaban relatif (RH) dan termistor untuk mengukur suhu. Sebuah chip khusus di dalamnya melakukan pengukuran dan mengeluarkan data digital yang sudah dikalibrasi, sehingga memudahkan integrasi dengan mikrokontroler.</p>
+            <p>Spesifikasi **DHT11:**</p>
+            <ul>
+                <li><strong>Rentang Pengukuran Kelembaban:</strong> 20-90% RH (±5% akurasi)</li>
+                <li><strong>Rentang Pengukuran Suhu:</strong> 0-50°C (±2°C akurasi)</li>
+                <li><strong>Resolusi:</strong> 1% RH (Kelembaban), 1°C (Suhu)</li>
+                <li><strong>Antarmuka:</strong> Digital (single-wire)</li>
+                <li><strong>Voltase Operasi:</strong> 3V to 5.5V</li>
+            </ul>
+            <p>Koneksi ke **Wemos D1 Mini:**</p>
+            <ul>
+                <li><strong>VCC (Pin 1):</strong> Hubungkan ke <code class="list-item-code">3V3</code> pada Wemos</li>
+                <li><strong>DATA (Pin 2):</strong> Hubungkan ke pin digital (misal <code class="list-item-code">D4</code>) pada Wemos. Diperlukan resistor pull-up **4.7KΩ - 10KΩ** antara VCC dan DATA.</li>
+                <li><strong>NC (Pin 3):</strong> Tidak terhubung</li>
+                <li><strong>GND (Pin 4):</strong> Hubungkan ke <code class="list-item-code">GND</code> pada Wemos</li>
+            </ul>
+            <div class="figure">
+                <img src="dht11.jpg" alt="DHT11 Pinout" width="300">
+                <caption>Gambar 3: Pinout Sensor DHT11</caption>
+            </div>
+
+            <h4>2.6. Modul Relay</h4>
+            <p>**Relay** adalah saklar elektromekanis yang memungkinkan sirkuit daya rendah (seperti dari Wemos D1 Mini) untuk mengontrol sirkuit daya tinggi (seperti pompa air 5V atau 12V). Modul relay biasanya memiliki optocoupler yang memberikan isolasi elektrik antara sisi kontrol dan sisi beban, melindungi mikrokontroler dari lonjakan tegangan yang mungkin terjadi dari beban.</p>
+            <p>Koneksi ke **Wemos D1 Mini:**</p>
+            <ul>
+                <li><strong>DC+</strong> atau **VCC:** Hubungkan ke <code class="list-item-code">5V</code> pada Wemos (beberapa relay membutuhkan 5V untuk koil)</li>
+                <li><strong>DC-</strong> atau **GND:** Hubungkan ke <code class="list-item-code">GND</code> pada Wemos</li>
+                <li><strong>IN (Input Signal):</strong> Hubungkan ke pin digital (misal <code class="list-item-code">D5</code>) pada Wemos. Pin ini mengontrol status relay (**LOW** = relay off, **HIGH** = relay on, atau sebaliknya tergantung modul).</li>
+                <li><strong>Sisi Beban (NO, COM, NC):</strong>
+                    <ul>
+                        <li>**COM (Common):** Terminal umum</li>
+                        <li>**NO (Normally Open):** Terhubung ke COM ketika relay aktif</li>
+                        <li>**NC (Normally Closed):** Terputus dari COM ketika relay aktif</li>
+                    </ul>
+                    Untuk mengontrol pompa, hubungkan sumber daya pompa (misal, positif dari power supply eksternal 5V/12V) ke COM, dan hubungkan NO ke terminal positif pompa. Ground pompa dihubungkan langsung ke ground power supply eksternal.
+                </li>
+            </ul>
+            <div class="figure">
+                <img src="relay.jpg" alt="Relay Module Pinout" width="400">
+                <caption>Gambar 4: Pinout Modul Relay 1 Channel</caption>
+            </div>
+
+            <h4>2.7. Mini Water Pump (Pompa Air Mini)</h4>
+            <p>**Pompa air mini DC** biasanya beroperasi pada tegangan **3V-6V**. Pompa ini digunakan untuk menyiram tanaman dengan mengalirkan air dari reservoir (penampung air) ke pot tanaman. Penting untuk dicatat bahwa pompa ini **TIDAK BOLEH** dijalankan tanpa air ("dry run") karena dapat merusak pompa dengan cepat.</p>
+			<div class="figure">
+                <img src="pump.jpg" alt="Mini Pump 3V-6V" width="300">
+                <caption>Gambar 5: Mini Pump 3V-6V</caption>
+            </div>
+            <p>Koneksi:</p>
+            <ul>
+                <li><strong>Kabel Merah (Positif):</strong> Dihubungkan ke terminal NO pada modul relay</li>
+                <li><strong>Kabel Hitam (Negatif):</strong> Dihubungkan ke ground power supply eksternal</li>
+            </ul>
+            <p><strong>Catatan Penting:</strong> Pompa air membutuhkan daya yang lebih besar daripada yang dapat disediakan oleh **Wemos D1 Mini**. Oleh karena itu, gunakan **power supply eksternal** (misalnya baterai **5V** atau adaptor **5V/2A**) khusus untuk pompa. Pastikan ground power supply eksternal ini dihubungkan juga ke ground Wemos D1 Mini agar referensi tegangannya sama.</p>
+        </section>
+
+        <section id="implementasi">
+            <h3>3. Implementasi</h3>
+            <p>Bagian ini menjelaskan langkah-langkah praktis dalam merakit dan memprogram sistem **Smart Garden**.</p>
+
+            <h4>3.1. Perakitan Komponen</h4>
+            <p>Langkah-langkah perakitan:</p>
+            <ol>
+                <li>Pasang **Wemos D1 Mini** pada breadboard.</li>
+                <li>Hubungkan **sensor kelembaban tanah**:
+                    <ul>
+                        <li>VCC → **3V3 Wemos**</li>
+                        <li>GND → **GND Wemos**</li>
+                        <li>AO → **A0 Wemos**</li>
+                    </ul>
+                </li>
+                <li>Hubungkan **sensor DHT11**:
+                    <ul>
+                        <li>VCC → **3V3 Wemos**</li>
+                        <li>DATA → **D4 Wemos** (dan tambahkan resistor pull-up **10KΩ** antara VCC dan DATA)</li>
+                        <li>GND → **GND Wemos**</li>
+                    </ul>
+                </li>
+                <li>Hubungkan **modul relay**:
+                    <ul>
+                        <li>DC+ → **5V Wemos**</li>
+                        <li>DC- → **GND Wemos**</li>
+                        <li>IN → **D5 Wemos**</li>
+                    </ul>
+                </li>
+                <li>Hubungkan **pompa air** ke modul relay dan power supply eksternal:
+                    <ul>
+                        <li>Kabel merah pompa → **NO pada relay**</li>
+                        <li>Kabel hitam pompa → **GND power supply eksternal**</li>
+                        <li>COM pada relay → **V+ (5V) power supply eksternal**</li>
+                        <li>**GND power supply eksternal → GND Wemos** (penting!)</li>
+                    </ul>
+                </li>
+                <li>Hubungkan **Wemos D1 Mini** ke komputer via kabel Micro USB untuk programming dan power awal.</li>
+            </ol>
+
+            <h4>3.2. Pemrograman</h4>
+            <p>Pemrograman dilakukan menggunakan **Arduino IDE**. Pastikan board ESP8266 sudah terinstall di Arduino IDE (Tambahkan link board: <code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code> melalui **File > Preferences > Additional Boards Manager URLs**).</p>
+            
+            <h5>Library yang Diperlukan:</h5>
+            <ul>
+                <li>**DHT Sensor Library** oleh Adafruit</li>
+                <li>**ESP8266WiFi** (sudah termasuk dengan board ESP8266)</li>
+                <li>**ESP8266WebServer** (sudah termasuk dengan board ESP8266)</li>
+            </ul>
+
+            <h5>Kode Program Utama:</h5>
+            <pre>
+#include &lt;ESP8266WiFi.h&gt;
+#include &lt;WiFiClient.h&gt;
+#include &lt;ESP8266WebServer.h&gt;
+#include &lt;DHT.h&gt; // Library untuk sensor DHT
+
+// Definisikan pin untuk sensor kelembaban, DHT dan relay
+const int sensorKelembabanPin = A0; // Pin analog untuk sensor kelembaban tanah
+const int relayPin = D1;           // Pin digital untuk mengontrol relay (GPIO5 pada Wemos D1 Mini)
+const int dhtPin = D2;             // Pin digital untuk sensor DHT11 (GPIO4 pada Wemos D1 Mini)
+
+#define DHTTYPE DHT11              // Tipe sensor DHT yang digunakan (DHT11)
+DHT dht(dhtPin, DHTTYPE);          // Inisialisasi objek DHT
+
+// Definisikan ambang batas kelembaban tanah (dalam persentase)
+const int nilaiKeringMin = 900;    // Contoh: Nilai sensor analog saat sangat kering (0-1023)
+const int nilaiBasahMax = 300;     // Contoh: Nilai sensor analog saat sangat basah (nilai lebih kecil = lebih basah)
+const int batasBawahKelembabanPersen = 40; // Jika kelembaban di bawah 40%, siram
+const int batasAtasKelembabanPersen = 70;  // Jika kelembaban di atas 70%, hentikan siram
+
+// Definisikan durasi penyiraman dan interval pengecekan otomatis
+const long durasiSiramMillis = 10000; // Durasi pompa menyala dalam milidetik (10 detik)
+const long intervalCekOtomatisMillis = 60000; // Interval pengecekan kelembaban otomatis (1 menit)
+
+unsigned long previousOtomatisCheckMillis = 0; // Variabel untuk menyimpan waktu terakhir pengecekan otomatis
+bool pompaStatus = false;                     // Status pompa: false=OFF, true=ON
+unsigned long pompaOnMillis = 0;              // Waktu saat pompa terakhir dinyalakan
+
+// Webserver setup
+IPAddress local_ip(192, 168, 4, 1);
+IPAddress gateway(192, 168, 4, 1);
+IPAddress subnet(255, 255, 255, 0);
+
+ESP8266WebServer server(80);
+
+// Variabel untuk menyimpan data sensor
+float temperature = 0;
+float humidity = 0;
+int soilMoistureRaw = 0;
+int soilMoisturePercent = 0;
+
+// Fungsi untuk membaca semua sensor
+void readAllSensors() {
+  // Baca sensor kelembaban tanah
+  soilMoistureRaw = analogRead(sensorKelembabanPin);
+  // Konversi nilai analog (nilaiKeringMin-nilaiBasahMax) ke persentase (0-100%)
+  // Sesuaikan mapping (nilaiKeringMin, nilaiBasahMax) dengan kalibrasi sensor Anda
+  soilMoisturePercent = map(soilMoistureRaw, nilaiKeringMin, nilaiBasahMax, 0, 100);
+  // Pastikan nilai berada dalam rentang 0-100
+  soilMoisturePercent = constrain(soilMoisturePercent, 0, 100);
+
+  // Baca sensor DHT11
+  humidity = dht.readHumidity();
+  temperature = dht.readTemperature();
+
+  // Cek apakah pembacaan DHT valid
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Gagal membaca dari sensor DHT!");
+    humidity = 0; // Atur ke 0 atau nilai default jika gagal
+    temperature = 0;
+  }
+
+  Serial.print("Kelembaban Tanah: "); Serial.print(soilMoisturePercent); Serial.println("%");
+  Serial.print("Suhu: "); Serial.print(temperature); Serial.println(" *C");
+  Serial.print("Kelembaban Udara: "); Serial.print(humidity); Serial.println("%");
+  Serial.print("Status Pompa: "); Serial.println(pompaStatus ? "ON" : "OFF");
+}
+
+void menyalakanPompa() {
+  if (!pompaStatus) { // Hanya menyalakan jika pompa belum ON
+    digitalWrite(relayPin, LOW); // Contoh: Mengaktifkan relay (aktif LOW). Sesuaikan dengan relay Anda.
+    pompaStatus = true;
+    pompaOnMillis = millis(); // Catat waktu saat pompa dinyalakan
+    Serial.println("Pompa ON");
+  }
+}
+
+void mematikanPompa() {
+  if (pompaStatus) { // Hanya mematikan jika pompa sedang ON
+    digitalWrite(relayPin, HIGH); // Contoh: Mematikan relay (aktif LOW). Sesuaikan dengan relay Anda.
+    pompaStatus = false;
+    Serial.println("Pompa OFF");
+  }
+}
+
+void handleRoot() {
+  readAllSensors(); // Pastikan data sensor terbaru sebelum membuat halaman HTML
+
+  String html = R"=====(
+&lt;!DOCTYPE html&gt;
+&lt;html lang='en'&gt;
+&lt;head&gt;
+    &lt;meta charset='UTF-8'&gt;
+    &lt;meta name='viewport' content='width=device-width, initial-scale=1.0'&gt;
+    &lt;meta http-equiv='refresh' content='10'&gt; &lt;!-- Auto-refresh setiap 10 detik --&gt;
+    &lt;title&gt;Smart Garden Dashboard&lt;/title&gt;
+    &lt;style&gt;
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #2c3e50; /* Background gelap */
+            color: #ecf0f1; 
+            margin: 0; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background-color: #34495e; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4); 
+            text-align: center; 
+        }
+        h1 { 
+            color: #2ecc71; 
+            margin-bottom: 20px; 
+            font-size: 2.2em; 
+        }
+        .gauge-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 20px; 
+            margin-top: 30px; 
+        }
+        .gauge-box { 
+            background-color: #4e6a81; 
+            padding: 20px; 
+            border-radius: 10px; 
+            flex: 1 1 calc(50% - 40px); /* 2 items per row on larger screens */ 
+            min-width: 250px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+        }
+        .gauge-box h2 { 
+            color: #3498db; 
+            font-size: 1.5em; 
+            margin-top: 0; 
+            margin-bottom: 15px; 
+        }
+        .gauge-value { 
+            font-size: 2.8em; 
+            font-weight: bold; 
+            color: #f1c40f; 
+            margin-bottom: 10px; 
+        }
+        .gauge-unit { 
+            font-size: 1.2em; 
+            color: #bdc3c7; 
+        }
+        .status-pump { 
+            background-color: #4e6a81; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-top: 30px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+        }
+        .status-pump h2 { 
+            color: #3498db; 
+            font-size: 1.5em; 
+            margin-top: 0; 
+            margin-bottom: 15px; 
+        }
+        .pump-state { 
+            font-size: 3em; 
+            font-weight: bold; 
+        }
+        .pump-on { 
+            color: #2ecc71; 
+        }
+        .pump-off { 
+            color: #e74c3c; 
+        }
+        @media (max-width: 600px) { 
+            .gauge-box { flex: 1 1 100%; /* 1 item per row on small screens */ } 
+            h1 { font-size: 1.8em; } 
+            .gauge-value { font-size: 2.2em; } 
+            .pump-state { font-size: 2.5em; } 
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class='container'&gt;
+        &lt;h1&gt;SMART GARDEN DASHBOARD&lt;/h1&gt;
+        
+        &lt;div class='gauge-grid'&gt;
+        
+            &lt;!-- Kelembaban Tanah --&gt;
+            &lt;div class='gauge-box'&gt;
+                &lt;h2&gt;Kelembaban Tanah&lt;/h2&gt;
+                &lt;div class='gauge-value'&gt;%soilMoisturePercent%&lt;span class='gauge-unit'&gt;%&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;!-- Suhu Ruangan --&gt;
+            &lt;div class='gauge-box'&gt;
+                &lt;h2&gt;Suhu Ruangan&lt;/h2&gt;
+                &lt;div class='gauge-value'&gt;%temperature%&lt;span class='gauge-unit'&gt; &amp;deg;C&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;!-- Kelembaban Ruangan --&gt;
+            &lt;div class='gauge-box'&gt;
+                &lt;h2&gt;Kelembaban Ruangan&lt;/h2&gt;
+                &lt;div class='gauge-value'&gt;%humidity%&lt;span class='gauge-unit'&gt;%&lt;/span&gt;&lt;/div&gt;
+            &lt;/div&gt;
+            
+            &lt;!-- Status Pompa --&gt;
+            &lt;div class='gauge-box'&gt;
+                &lt;h2&gt;Status Pompa&lt;/h2&gt;
+                &lt;div class='pump-state %pumpClass%'&gt;%pumpStatusText%&lt;/div&gt;
+            &lt;/div&gt;
+        
+        &lt;/div&gt; &lt;!-- end .gauge-grid --&gt;
+
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+)=====";
+
+  // Ganti placeholder dengan nilai aktual
+  html.replace("%soilMoisturePercent%", String(soilMoisturePercent));
+  html.replace("%temperature%", String(temperature, 1));
+  html.replace("%humidity%", String(humidity, 1));
+  html.replace("%pumpClass%", (pompaStatus ? "pump-on" : "pump-off"));
+  html.replace("%pumpStatusText%", (pompaStatus ? "ON" : "OFF"));
+  
+  server.send(200, "text/html", html);
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(relayPin, OUTPUT);
+  digitalWrite(relayPin, HIGH); // Pastikan pompa mati saat startup (HIGH untuk relay aktif LOW)
+  pompaStatus = false;
+
+  dht.begin(); // Inisialisasi sensor DHT
+
+  // Konfigurasi sebagai Access Point
+  Serial.print("Setting up AP...");
+  WiFi.softAPConfig(local_ip, gateway, subnet);
+  WiFi.softAP("SmartGardenAP"); // Nama SSID Wi-Fi
+  Serial.println("Ready");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.softAPIP());
+
+  server.on("/", handleRoot);
+  // server.on("/pompa_on", handlePompaOn); // Kontrol manual (opsional)
+  // server.on("/pompa_off", handlePompaOff); // Kontrol manual (opsional)
+  server.begin();
+  Serial.println("HTTP server started");
+
+  readAllSensors(); // Baca sensor pertama kali saat startup
+  previousOtomatisCheckMillis = millis(); // Inisialisasi waktu pengecekan otomatis
+}
+
+void loop() {
+  server.handleClient(); // Tangani permintaan dari web client
+
+  unsigned long currentMillis = millis();
+
+  // Logika otomatis untuk penyiraman
+  if (currentMillis - previousOtomatisCheckMillis >= intervalCekOtomatisMillis) {
+    previousOtomatisCheckMillis = currentMillis; // Reset waktu pengecekan otomatis
+    // Panggil readAllSensors() di sini jika Anda ingin logika AI
+    // selalu menggunakan data sensor terbaru, terlepas dari kapan web di-refresh.
+    readAllSensors(); // Uncomment ini jika perlu data sensor terbaru untuk logika otomatis secara berkala
+
+    if (soilMoisturePercent < batasBawahKelembabanPersen && !pompaStatus) {
+      Serial.println("Tanah kering! Memulai penyiraman otomatis...");
+      menyalakanPompa();
+      // previousOtomatisCheckMillis juga berfungsi sebagai pompaOnMillis
+    } else if (soilMoisturePercent > batasAtasKelembabanPersen && pompaStatus) {
+      Serial.println("Tanah sudah cukup lembab. Menghentikan penyiraman otomatis.");
+      mematikanPompa();
+    }
+  }
+
+  // Jika pompa sedang ON karena penyiraman otomatis dan durasi sudah habis
+  if (pompaStatus && (currentMillis - pompaOnMillis >= durasiSiramMillis)) {
+     Serial.println("Durasi penyiraman otomatis habis. Mematikan pompa.");
+     mematikanPompa(); // Pastikan pompa mati setelah durasi siram
+  }
+}
+</pre>
+            <p><strong>Penjelasan Kode:</strong></p>
+            <ol>
+                <li><strong>Setup:</strong> Menginisialisasi pin, koneksi WiFi (sebagai Access Point dengan SSID "**SmartGardenAP**"), dan webserver.</li>
+                <li><strong>Loop Utama:</strong> Menangani request client dari webserver, serta secara berkala (setiap <code class="list-item-code">intervalCekOtomatisMillis</code>) membaca sensor dan menjalankan logika penyiraman otomatis.</li>
+                <li><strong>readAllSensors():</strong> Fungsi ini membaca nilai dari semua sensor (kelembaban tanah, suhu, kelembaban udara) dan mencetaknya ke Serial Monitor untuk debugging. Nilai analog sensor kelembaban tanah dikonversi ke persentase.</li>
+                <li><strong>menyalakanPompa()/mematikanPompa():</strong> Fungsi-fungsi ini mengontrol status relay yang terhubung ke pompa, serta mencatat waktu saat pompa dinyalakan untuk keperluan durasi penyiraman otomatis.</li>
+                <li><strong>Logika Penyiraman Otomatis:</strong> Diimplementasikan di dalam fungsi <code class="list-item-code">loop()</code>. Jika kelembaban tanah (<code class="list-item-code">soilMoisturePercent</code>) berada di bawah <code class="list-item-code">batasBawahKelembabanPersen</code> dan pompa tidak sedang menyala, maka pompa akan dinyalakan. Jika pompa sedang menyala dan kelembaban tanah sudah di atas <code class="list-item-code">batasAtasKelembabanPersen</code>, atau durasi penyiraman otomatis (<code class="list-item-code">durasiSiramMillis</code>) telah habis, pompa akan dimatikan.</li>
+                <li><strong>handleRoot():</strong> Fungsi ini bertanggung jawab untuk mengirimkan halaman web antarmuka pengguna ke browser client. Halaman HTML ini memiliki fitur auto-refresh setiap 10 detik (<code class="list-item-code">&lt;meta http-equiv='refresh' content='10'&gt;</code>) dan menggunakan placeholder (seperti <code class="list-item-code">%soilMoisturePercent%</code>) yang akan diganti dengan nilai sensor aktual sebelum dikirim ke browser.</li>
+            </ol>
+
+            <h4>3.3. Antarmuka Webserver</h4>
+            <p>Setelah kode diupload ke **Wemos D1 Mini**, board akan berfungsi sebagai **Access Point** dengan nama "**SmartGardenAP**". Hubungkan perangkat Anda (smartphone, laptop, tablet) ke jaringan WiFi ini. Setelah terhubung, buka alamat IP yang ditampilkan di Serial Monitor (defaultnya **192.168.4.1**) di browser web Anda. Anda akan melihat antarmuka webserver seperti berikut:</p>
+            
+            <div class="web-display">
+                <h5>Smart Garden Dashboard</h5>
+                <div style="background-color: #4e6a81; padding: 20px; border-radius: 10px; margin: 10px auto; max-width: 350px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    <h2 style="color: #3498db; font-size: 1.5em; margin-top: 0; margin-bottom: 15px;">Kelembaban Tanah</h2>
+                    <div style="font-size: 2.8em; font-weight: bold; color: #f1c40f; margin-bottom: 10px;">65<span style="font-size: 1.2em; color: #bdc3c7;">%</span></div>
+                </div>
+                <div style="background-color: #4e6a81; padding: 20px; border-radius: 10px; margin: 10px auto; max-width: 350px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    <h2 style="color: #3498db; font-size: 1.5em; margin-top: 0; margin-bottom: 15px;">Suhu Ruangan</h2>
+                    <div style="font-size: 2.8em; font-weight: bold; color: #f1c40f; margin-bottom: 10px;">28.5<span style="font-size: 1.2em; color: #bdc3c7;"> &deg;C</span></div>
+                </div>
+                <div style="background-color: #4e6a81; padding: 20px; border-radius: 10px; margin: 10px auto; max-width: 350px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    <h2 style="color: #3498db; font-size: 1.5em; margin-top: 0; margin-bottom: 15px;">Kelembaban Ruangan</h2>
+                    <div style="font-size: 2.8em; font-weight: bold; color: #f1c40f; margin-bottom: 10px;">72.0<span style="font-size: 1.2em; color: #bdc3c7;">%</span></div>
+                </div>
+                <div style="background-color: #4e6a81; padding: 20px; border-radius: 10px; margin: 10px auto; max-width: 350px; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    <h2 style="color: #3498db; font-size: 1.5em; margin-top: 0; margin-bottom: 15px;">Status Pompa</h2>
+                    <div style="font-size: 3em; font-weight: bold; color: #e74c3c;">OFF</div>
+                </div>
+            </div>
+            <p>Antarmuka ini akan secara otomatis me-refresh setiap **10 detik** untuk menampilkan data sensor terbaru. Status pompa akan berubah antara "**ON**" (hijau) atau "**OFF**" (merah) sesuai dengan kondisi kelembaban tanah dan durasi penyiraman otomatis.</p>
+        </section>
+
+        <section id="pengujian">
+            <h3>4. Pengujian dan Hasil</h3>
+            <p>Setelah sistem dirakit dan diprogram, dilakukan serangkaian pengujian untuk memverifikasi fungsionalitas setiap komponen dan sistem secara keseluruhan.</p>
+
+            <h4>4.1. Pengujian Individual Komponen</h4>
+            <ol>
+                <li><strong>Sensor Kelembaban Tanah:</strong>
+                    <ul>
+                        <li>Sensor dicelupkan ke dalam air (kelembaban **100%**) &rarr; nilai pembacaan di Serial Monitor dan webserver harus mendekati **100%**.</li>
+                        <li>Sensor dikeringkan dengan tisu (kelembaban **0%**) &rarr; nilai pembacaan harus mendekati **0%**.</li>
+                        <li>Diamati respons sensor terhadap perubahan kelembaban yang cepat. Perlu diingat bahwa kalibrasi <code class="list-item-code">nilaiKeringMin</code> dan <code class="list-item-code">nilaiBasahMax</code> sangat penting untuk akurasi pembacaan persentase.</li>
+                    </ul>
+                </li>
+                <li><strong>Sensor DHT11:</strong>
+                    <ul>
+                        <li>Pembacaan suhu dan kelembaban udara dibandingkan dengan termometer/hygrometer standar untuk memverifikasi akurasi.</li>
+                        <li>Diamati konsistensi pembacaan setiap interval tertentu.</li>
+                    </ul>
+                </li>
+                <li><strong>Modul Relay dan Pompa Air:</strong>
+                    <ul>
+                        <li>Dipastikan relay dapat mengaktifkan dan menonaktifkan pompa dengan benar ketika logika otomatis memicu perubahan status.</li>
+                        <li>Dipastikan tidak ada kebocoran arus atau korsleting saat pompa beroperasi.</li>
+                    </ul>
+                </li>
+                <li><strong>Konektivitas WiFi dan Webserver:</strong>
+                    <ul>
+                        <li>Diuji kestabilan **Wemos D1 Mini** sebagai **Access Point** ("**SmartGardenAP**") dalam jarak tertentu dari perangkat client.</li>
+                        <li>Diakses antarmuka webserver dari berbagai perangkat (smartphone, laptop, tablet) melalui alamat IP Access Point.</li>
+                        <li>Diuji pembaruan data yang terjadi secara otomatis setiap **10 detik** (karena meta refresh).</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>4.2. Pengujian Sistem Terintegrasi</h4>
+            <ol>
+                <li><strong>Pengujian Logika Otomatis:</strong>
+                    <ul>
+                        <li>Kelembaban tanah sengaja dikeringkan (misalnya, sensor diangkat dari tanah atau dibiarkan kering hingga di bawah <code class="list-item-code">batasBawahKelembabanPersen</code>, yaitu **40%**) &rarr; dipastikan pompa menyala otomatis.</li>
+                        <li>Diamati pompa menyala selama <code class="list-item-code">durasiSiramMillis</code> (**10 detik**) dan kemudian mati secara otomatis, atau mati lebih awal jika kelembaban tanah telah mencapai <code class="list-item-code">batasAtasKelembabanPersen</code> (**70%**).</li>
+                        <li>Dicatat waktu respons sistem dari deteksi kekeringan hingga pompa menyala.</li>
+                    </ul>
+                </li>
+                <li><strong>Pengujian Daya Tahan:</strong>
+                    <ul>
+                        <li>Sistem dibiarkan berjalan selama **24 jam** untuk mengamati stabilitas jangka panjang dan pola penyiraman.</li>
+                        <li>Diamati konsumsi daya dan kemungkinan overheating pada komponen.</li>
+                    </ul>
+                </li>
+                <li><strong>Pengujian pada Tanaman Nyata:</strong>
+                    <ul>
+                        <li>Sistem diterapkan pada tanaman dalam pot sungguhan.</li>
+                        <li>Diamati kondisi tanaman sebelum dan setelah penggunaan sistem selama beberapa hari/minggu.</li>
+                        <li>Dibandingkan dengan tanaman kontrol yang disiram secara manual untuk mengevaluasi efektivitasnya.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>4.3. Hasil Pengujian (Contoh)</h4>
+            <p>Berdasarkan pengujian yang dilakukan, diperoleh hasil sebagai berikut:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aspek yang Diuji</th>
+                        <th>Hasil</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pembacaan Sensor Kelembaban Tanah</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Nilai berkisar **0-100%**, perlu kalibrasi lebih lanjut untuk akurasi absolut pada jenis tanah spesifik</td>
+                    </tr>
+                    <tr>
+                        <td>Pembacaan Sensor DHT11</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Suhu dan kelembaban udara terbaca dengan akurasi yang wajar (**&plusmn;2&deg;C** dan **&plusmn;5%**)</td>
+                    </tr>
+                    <tr>
+                        <td>Kontrol Relay dan Pompa</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Pompa dapat dihidupkan/matikan secara otomatis sesuai logika</td>
+                    </tr>
+                    <tr>
+                        <td>Konektivitas WiFi (AP Mode)</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Wemos berfungsi stabil sebagai **Access Point**, webserver dapat diakses</td>
+                    </tr>
+                    <tr>
+                        <td>Antarmuka Webserver</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Tampilan informatif, data terupdate melalui auto-refresh halaman</td>
+                    </tr>
+                    <tr>
+                        <td>Penyiraman Otomatis</td>
+                        <td><strong>Berhasil</strong></td>
+                        <td>Pompa menyala otomatis saat tanah kering dan mati setelah durasi atau kelembaban tercapai</td>
+                    </tr>
+                    <tr>
+                        <td>Konsumsi Daya</td>
+                        <td><strong>Cukup hemat</strong></td>
+                        <td>Sistem dapat dioperasikan dengan power bank kecil untuk portabilitas</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Secara keseluruhan, sistem **Smart Garden** berhasil berfungsi sesuai dengan tujuan yang ditetapkan. Sistem mampu membaca kondisi lingkungan, menampilkannya secara real-time melalui webserver (dengan mekanisme refresh), dan mengambil keputusan otomatis untuk menyiram tanaman ketika diperlukan.</p>
+        </section>
+
+        <section id="pembahasan">
+            <h3>5. Pembahasan</h3>
+            <p>Proyek **Smart Garden** ini telah berhasil mendemonstrasikan integrasi antara hardware (sensor, mikrokontroler, aktuator) dan software (pemrograman, webserver, logika AI sederhana) untuk menciptakan sebuah sistem IoT yang aplikatif. Pencapaian utama proyek ini adalah:</p>
+            <ol>
+                <li><strong>Implementasi IoT yang Berhasil:</strong> Sistem berfungsi sebagai **Access Point**, memungkinkan monitoring dari perangkat lain yang terhubung ke jaringan lokalnya tanpa memerlukan router eksternal.</li>
+                <li><strong>Automasi Berbasis Kondisi Nyata:</strong> Keputusan penyiraman didasarkan pada data aktual dari sensor kelembaban tanah, bukan jadwal waktu yang kaku, sehingga lebih efisien dalam penggunaan air.</li>
+                <li><strong>Antarmuka yang User-Friendly:</strong> Webserver yang dirancang secara responsif (dengan auto-refresh) memudahkan pengguna untuk memantau kondisi tanaman.</li>
+                <li><strong>Pengenalan Konsep AI:</strong> Meskipun sederhana, logika if-else yang digunakan untuk pengambilan keputusan penyiraman merupakan bentuk paling dasar dari sistem pakar (**expert system**) dalam **AI**, di mana aturan-aturan tertentu (rules) diterapkan untuk mengambil tindakan berdasarkan kondisi lingkungan.</li>
+            </ol>
+
+            <h4>5.1. Kendala dan Solusi</h4>
+            <p>Dalam pelaksanaan proyek, beberapa kendala yang dihadapi dan solusinya adalah:</p>
+            <ul>
+                <li><strong>Korosi Probe Sensor Tanah:</strong> Probe sensor kelembaban tanah yang terus dialiri arus DC rentan mengalami korosi. **Solusi:** Meskipun belum sepenuhnya diimplementasikan dalam kode yang dilampirkan, salah satu solusi yang direkomendasikan adalah memodifikasi kode untuk hanya memberi daya pada sensor saat akan membaca (menggunakan pin digital sebagai VCC), sehingga mengurangi paparan arus terus-menerus dan memperpanjang umur sensor.</li>
+                <li><strong>Akurasi Sensor:</strong> Pembacaan sensor kelembaban tanah sangat bervariasi tergantung jenis tanah, kepadatannya, dan kandungan mineralnya. **Solusi:** Dilakukan kalibrasi manual yang cermat untuk setiap jenis tanah yang digunakan, dengan membandingkan nilai pembacaan sensor dengan kondisi aktual tanah (misalnya, tanah kering, lembab, basah). Parameter <code class="list-item-code">nilaiKeringMin</code> dan <code class="list-item-code">nilaiBasahMax</code> dalam kode perlu disesuaikan berdasarkan hasil kalibrasi ini.</li>
+                <li><strong>Konsumsi Daya Pompa:</strong> Pompa air mini membutuhkan daya yang lebih besar daripada yang dapat disediakan oleh pin GPIO **Wemos D1 Mini** atau port USB komputer. **Solusi:** Menggunakan **power supply eksternal** (misalnya, baterai **5V** atau adaptor **5V/2A**) khusus untuk pompa, dengan tetap menghubungkan ground dari power supply eksternal ini ke ground **Wemos D1 Mini** agar referensi tegangannya sama.</li>
+            </ul>
+
+            <h4>5.2. Kelebihan dan Kekurangan Sistem</h4>
+            <p><strong>Kelebihan:</strong></p>
+            <ul>
+                <li>Otomatisasi penyiraman secara cerdas menghemat waktu dan tenaga pengelola tanaman.</li>
+                <li>Penggunaan air yang efisien karena hanya disiram ketika kelembaban tanah di bawah ambang batas yang ditentukan, mengurangi pemborosan air.</li>
+                <li>Pemantauan kondisi lingkungan tanaman (kelembaban tanah, suhu, kelembaban udara) secara real-time dari jarak dekat melalui perangkat terhubung ke AP.</li>
+                <li>Biaya implementasi relatif murah dengan komponen yang mudah didapat di pasaran elektronik.</li>
+                <li>Sangat cocok sebagai media edukasi dan proyek praktis untuk pengenalan **IoT** dan pemrograman mikrokontroler.</li>
+            </ul>
+
+            <p><strong>Kekurangan:</strong></p>
+            <ul>
+                <li>Ketergantungan pada sumber daya listrik untuk operasional mikrokontroler dan pompa.</li>
+                <li>Akurasi pembacaan sensor kelembaban tanah dapat dipengaruhi oleh banyak faktor eksternal (jenis tanah, suhu lingkungan, kadar garam dalam tanah).</li>
+                <li>Antarmuka webserver masih sederhana, menggunakan metode auto-refresh halaman dan tidak memiliki fitur kontrol manual langsung atau pembaruan data secara dinamis (**AJAX**).</li>
+                <li>Belum memiliki fitur penyimpanan data historis (**data logging**) ke SD card atau cloud service.</li>
+                <li>Belum dilengkapi dengan sistem notifikasi/peringatan (**alert**) jika terjadi kondisi abnormal pada tanaman atau sistem.</li>
+                <li>Mode **Access Point** membatasi jangkauan dan mobilitas pemantauan dibandingkan dengan koneksi ke router internet.</li>
+            </ul>
+
+            <h4>5.3. Saran Pengembangan</h4>
+            <p>Untuk meningkatkan kemampuan dan fungsionalitas sistem **Smart Garden** ini, dapat dilakukan pengembangan lebih lanjut:</p>
+            <ol>
+                <li><strong>Penambahan Fitur:</strong>
+                    <ul>
+                        <li>Implementasi **AJAX** pada webserver untuk pembaruan data real-time yang lebih mulus tanpa perlu me-refresh seluruh halaman.</li>
+                        <li>Penambahan tombol kontrol manual pada antarmuka webserver untuk mengaktifkan atau menonaktifkan pompa secara paksa.</li>
+                        <li>Integrasi dengan platform **IoT** berbasis cloud (seperti **Blynk, ThingsBoard, atau Firebase**) untuk monitoring dan kontrol dari jarak jauh melalui internet, serta penyimpanan data historis.</li>
+                        <li>Penambahan modul notifikasi (misalnya via email, Telegram, atau push notification) untuk memberikan peringatan dini jika ada kondisi kritis (tanah terlalu kering, suhu ekstrem, dll.).</li>
+                        <li>Penambahan sensor lain seperti **sensor cahaya (LDR)** untuk memantau intensitas sinar matahari atau **sensor pH tanah** untuk mengukur keasaman tanah.</li>
+                    </ul>
+                </li>
+                <li><strong>Peningkatan Kecerdasan Buatan:</strong>
+                    <ul>
+                        <li>Implementasi algoritma **machine learning sederhana** untuk memprediksi kebutuhan air tanaman berdasarkan pola data historis, jenis tanaman, dan bahkan informasi cuaca eksternal.</li>
+                        <li>Pengembangan "**adaptive threshold**" yang memungkinkan sistem untuk secara otomatis menyesuaikan nilai ambang batas penyiraman berdasarkan jenis tanaman, fase pertumbuhan, dan kondisi lingkungan yang berubah.</li>
+                    </ul>
+                </li>
+                <li><strong>Optimasi Hardware:</strong>
+                    <ul>
+                        <li>Penggunaan **sensor kelembaban tanah kapasitif** yang lebih tahan korosi untuk durasi penggunaan yang lebih lama.</li>
+                        <li>Penggunaan solusi daya berkelanjutan, seperti kombinasi **battery pack dengan solar panel**, untuk membuat sistem Smart Garden sepenuhnya wireless dan independen dari sumber listrik utama, ideal untuk aplikasi outdoor.</li>
+                        <li>Desain dan pembuatan casing yang lebih rapi, tahan air, dan tahan cuaca untuk melindungi komponen elektronik jika sistem ditempatkan di luar ruangan.</li>
+                    </ul>
+                </li>
+            </ol>
+        </section>
+
+        <section id="kesimpulan">
+            <h3>5. Kesimpulan dan Saran</h3>
+            <p><strong>Kesimpulan:</strong></p>
+            <ol>
+                <li>Sistem **Smart Garden** berbasis **IoT** yang dirancang dan diimplementasikan ini berhasil bekerja sesuai tujuan untuk mengotomatisasi penyiraman tanaman berdasarkan kondisi kelembaban tanah.</li>
+                <li>Integrasi **sensor kelembaban tanah** dan **sensor DHT11** dengan mikrokontroler **Wemos D1 Mini** terbukti mampu memberikan data lingkungan yang relevan secara real-time melalui antarmuka webserver berbasis **Access Point**.</li>
+                <li>Penerapan logika sederhana berbasis ambang batas (**rule-based system**) telah menunjukkan efektivitasnya sebagai pengendali awal berbasis **Kecerdasan Artifisial** untuk pengambilan keputusan otomatis.</li>
+            </ol>
+            <p><strong>Saran Pengembangan:</strong></p>
+            <ul>
+                <li>Meningkatkan fitur antarmuka webserver dengan pembaruan dinamis (**AJAX**) dan menambahkan opsi kontrol manual.</li>
+                <li>Menghubungkan sistem ke platform cloud **IoT** (misalnya: **Firebase** atau **Blynk**) untuk memungkinkan pemantauan dan kontrol jarak jauh melalui internet global, serta fitur data logging.</li>
+                <li>Menambahkan notifikasi ke smartphone jika tanaman membutuhkan perhatian (misalnya, tanah terlalu kering atau pompa bermasalah).</li>
+                <li>Mengintegrasikan sensor tambahan, seperti **sensor cahaya (LDR)**, untuk mengoptimalkan kondisi pertumbuhan tanaman secara lebih komprehensif.</li>
+                <li>Meningkatkan ketahanan sistem terhadap korosi dan cuaca ekstrem untuk aplikasi jangka panjang di luar ruangan.</li>
+            </ul>
+        </section>
+
+        <section id="referensi" class="references">
+            <h3>Daftar Pustaka</h3>
+            <ol>
+                <li><strong>Random Nerd Tutorials</strong>. (2023). <em>ESP8266 DHT11/DHT22 Web Server</em>. Diakses dari: https://randomnerdtutorials.com</li>
+                <li><strong>Last Minute Engineers</strong>. (2022). <em>Soil Moisture Sensor Tutorial</em>. Diakses dari: https://lastminuteengineers.com</li>
+                <li><strong>Components101</strong>. (2021). <em>DHT11 Temperature and Humidity Sensor Pinout</em>. Diakses dari: https://components101.com</li>
+                <li><strong>SMK Gajah Mada Banyuwangi</strong>. (2024). Modul Pembelajaran Kokurikuler Koding & IoT.</li>
+            </ol>
+        </section>
+    </div>
+</body>
+</html>
